@@ -76,9 +76,9 @@ class Pico_Images extends AbstractPicoPlugin {
    * @param array|null &$nextPage     data of the next page
    */
   public function onCurrentPageDiscovered(
-    array &$currentPage = null,
-    array &$previousPage = null,
-    array &$nextPage = null
+      array &$currentPage = null,
+      array &$previousPage = null,
+      array &$nextPage = null
   ) {
     $this->page_id = $currentPage['id'];
     if(isset($currentPage['meta']['images'])){
@@ -101,37 +101,37 @@ class Pico_Images extends AbstractPicoPlugin {
     $this->config_assets['url'] = $config['assets_url'];
   }
 
-  // from pico.php lib
-  protected function get_protocol()
-  {
-    $protocol = 'http';
-    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'){
-      $protocol = 'https';
-    }
-    return $protocol;
-  }
+	// from pico.php lib
+	protected function get_protocol()
+	{
+		$protocol = 'http';
+		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'){
+			$protocol = 'https';
+		}
+		return $protocol;
+	}
 
-  // from pico.php lib
-  protected function base_url()
-  {
-    global $config;
-    if(isset($config['base_url']) && $config['base_url']) return $config['base_url'];
-    $url = '';
-    $request_url = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
-    $script_url  = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '';
-    if($request_url != $script_url) $url = trim(preg_replace('/'. str_replace('/', '\/', str_replace('index.php', '', $script_url)) .'/', '', $request_url, 1), '/');
-    $protocol = $this->get_protocol();
-    return rtrim(str_replace($url, '', $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']), '/');
-  }
+	// from pico.php lib
+	protected function base_url()
+	{
+		global $config;
+		if(isset($config['base_url']) && $config['base_url']) return $config['base_url'];
+		$url = '';
+		$request_url = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
+		$script_url  = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '';
+		if($request_url != $script_url) $url = trim(preg_replace('/'. str_replace('/', '\/', str_replace('index.php', '', $script_url)) .'/', '', $request_url, 1), '/');
+		$protocol = $this->get_protocol();
+		return rtrim(str_replace($url, '', $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']), '/');
+	}
 
-  // modified get_files function from the pico.php lib that checks if images directory exists
-  private function get_files($directory, $ext = '')
-  {
-    $array_items = array();
-    if (!is_dir($directory)) {
-      $this->have_images = false;
-      return $array_items;
-    }
+	// modified get_files function from the pico.php lib that checks if images directory exists
+	private function get_files($directory, $ext = '')
+	{
+		$array_items = array();
+		if (!is_dir($directory)) {
+			$this->have_images = false;
+			return $array_items;
+		}
     $files = scandir( $directory );
     foreach( $files as $file ) {
       if($file != "." && $file != ".." && substr($file, 0, 6) != 'thumb_'){
@@ -143,8 +143,8 @@ class Pico_Images extends AbstractPicoPlugin {
         }
       }
     }
-    return $array_items;
-  }
+		return $array_items;
+	}
 
   /**
    * Triggered before Pico renders the page
